@@ -1,0 +1,35 @@
+// Drf does not support various fields that is supported by django models such as :-
+
+   -- serializers.IntegerField -- 
+   for every number releted field serializer consider them inside integer field
+
+   -- serializer.CharField --
+   for every string releted or text reletef field drf consider them inside Charfield
+
+   -- Relation field -- 
+
+   - PrimaryKeyRelatedField(many=True) - many to many field
+   - PrimaryKeyRelatedField - one to many field/ one to one field 
+
+
+
+// validated_data vs data 
+
+    think of serializer as two faces of a coin 
+    Once face talks to the database
+    other talks to the outside world(api response)
+
+    VALIDATED_DATA = used only for create and update logic
+    1.Pure python data.
+    2.Already passes all validation.
+    3.Used only for create/update logic.
+    (self.create(self,validated_data))
+    (self.update(self,instance,validated_data))
+
+    4.never return in API response automatically.
+
+
+    Data = used for representation
+    1.used in Response(serializer.data)
+    2.does not requrie validation
+

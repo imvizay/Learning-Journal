@@ -1,0 +1,54 @@
+
+// from rest_framework.serializer import Serializer
+
+    when we user Serializer class then in the serializers.py we have to manully defined the serializer fields for the model and even the crud actions (create,put,patch,delete) and cannot the other way we did while using the 
+
+// from rest_framework.serializer import ModelSerializer
+
+    we doont have to do anything manually doing it manually is totally optional untill we want to override the function
+    using class meta provide relief for heavy line of code doing
+
+// defination of constraints manually 
+
+    age = serializers.IntegerField(min_value=0, max_value=120)
+
+    " 
+    1.If we are using Serializer instead of ModelSerializer,we have to define the constraints manually as there is no meta class model to infer constraints from so we have to do it manually 
+    
+    2.And also if we dont defined the constraints manually then assuming this Model.objects.create(validated_data)
+    will do it afterwards before saving instance into the database is wrong as sometimes this may gets messay and it would raise error at db level and frontend wont receive proper clear error response 
+    "
+
+
+// serializer.is_valid()
+    is_valid () , does all validation regarding the 
+
+    constraints defined = blank = false,unique=True,max_length
+    field defined = name = models.CharField 
+                           age = models.IntegerField.  
+
+    field level validation  = fieldname_validate(self,value)
+    object level validation  = validate(self,data)
+
+
+
+// is_valid is gatekeeper between the request and the database 
+    
+    serializer.is_valid() validates incoming request data against serializer rules, runs field-level and object-level validations, converts data into Python-safe types, and ensures only clean data proceeds to saving.
+
+// raise_exception=True
+
+    without it :- 
+    ------------------------
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors, status=400)
+    \---------------------------
+
+    this helps us saves writting more boilterplate instead of doing if else for is_valid we pass 
+    is_valid(raise_exception=True)
+
+    if is_valid() gets fails drf automatically runs the else condition and generate error response automatically
+
+
