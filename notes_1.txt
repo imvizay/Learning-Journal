@@ -31,15 +31,21 @@
     object level validation  = validate(self,data)
 
 
+// save() 
 
-// is_valid is gatekeeper between the request and the database 
+    this decided whether to call the create method or update method of the serializer as inter it checks for the paramter value of the instance when we call serializer in the view 
+
+   **** serializer = Serializer(instance=obj,data=request.data) *****
+
+
+// is_valid() is gatekeeper between the request and the database 
     
     serializer.is_valid() validates incoming request data against serializer rules, runs field-level and object-level validations, converts data into Python-safe types, and ensures only clean data proceeds to saving.
 
 // raise_exception=True
 
     without it :- 
-    ------------------------
+    /------------------------
     if serializer.is_valid():
         serializer.save()
     else:
