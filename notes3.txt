@@ -1,0 +1,8 @@
+def function(self,request):
+
+def function(request):
+
+// Sometimes self provided and sometimes self not provided in a function 
+
+    " self is specfific to instances means to the particular instance 
+    so whenever a fucntion is created outside a class it does not require self paramater but inside a class it always required self parameter to make it specific to that instance only."

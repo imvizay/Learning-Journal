@@ -1,0 +1,43 @@
+// CSRF 
+    " csrf -- cros site request forgery is a security attack where malicious attackers uses user's autehnticated browsers cookies to make unintended actions from the trusted website using users' existing session. "
+
+    1.whenever we use session authentication we should always user csrf_token to avoid such attacks and allows only legit users make requests.
+
+// CSRF_TOKEN 
+    it is a token that verifies the request is coming from the trusted user
+
+
+
+// DRF VIEWS
+
+    FBV → APIView → GenericAPIView → ViewSet
+
+    (simple)                      (powerful)
+
+
+// APIVIEW
+
+    "foundation of all class based views the the APIView"
+
+    When a request hits an APIView, DRF automatically does:
+        1.Parse request body (JSON, form, multipart)
+        2.Authenticate the user
+        3.Check permissions
+        4.Check throttling
+        5.Call your method (get, post, etc.)
+        6.Return a proper API response
+
+
+// The flow 
+
+    "path("api/product/",Product.as_view())"
+
+    as_view() runs a dispatch function that checks prerequities before executing the view.  
+
+    dispatch()
+     ├─ initialize_request()
+     ├─ initial()
+     ├─ call handler (get/post/etc.)
+     ├─ handle_exception()
+     └─ finalize_response()
+
