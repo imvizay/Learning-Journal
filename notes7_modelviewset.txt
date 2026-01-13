@@ -1,0 +1,58 @@
+" ModelViewSet + routers "
+
+most abstract drf view and most advance that requires 0 code 
+
+from rest_framework import viewsets
+
+class ProductInformation(viewsets.ModelViewSet):
+
+    """
+    just this only it handles request automatically and call the respective function based on the request with the help of the routers
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+
+// ==================================================
+
+Routers.py
+
+rest_framework/routers.py -- thats exactlly where our routers resides
+
+so when we do 
+-------------
+from rest_framework.routers import DefaultRouter,SimpleRouter
+router = DefaultRouter()
+router.register(r"products",ProductInformation)
+urlpatterns += router.urls
+--------------
+
+
+? how router works.
+
+when we do register()
+django internally stores a tuple (prefix,viewset,basename)
+
+then the tuple is appended into register.routes
+
+routes = [
+
+    Route(
+        url = r'^{prefix}/$'
+        mapping = { 
+            "get":"list"
+            "post":"create"
+             }
+        basename = "{basename}-list"
+        action = False
+    )
+]
+
+// then how does url actually and when at what line of code does it generate
+simpily it the line of code when we do ""urlpatterns = router.urls""
+
+urlpatterns = router.urls this line enforeces url generation when python server boots or run doing python manage.py runserver and the url does not generate on runtime when code execute but when the server start or reboots
+
+
