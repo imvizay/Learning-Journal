@@ -1,0 +1,34 @@
+. serializer.py 
+
+1. Slug releted field
+
+class BookSerializer(serializer.ModelSerializer):
+    author = serializer.SlugReletedField(
+       slug_field="email",
+       queryset = Author.obbjects.all(),
+    )
+
+    class Meta:
+       model = Book
+       Fields = ["id","bookname","author"]
+
+    
+
+Note : SlugReletedField does not create objects it links already exisitng releted objects
+
+By this 
+    author = serializers.SlugRelatedField(
+    slug_field="email",
+    queryset=Author.objects.all()   
+    )
+
+You are telling DRF:
+    “I will give you a value (email).
+    Find an Author that already exists with this value.
+    If you can’t find it — FAIL.”
+
+Drf does internally
+
+    author = Author.objects.get(email="john@example.com")
+     
+    and this fails then i wont create the user it just failed with serialization error,like author not found or something ,  "author": ["Object with email=new@example.com does not exist."] 

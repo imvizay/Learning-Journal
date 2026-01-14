@@ -1,0 +1,105 @@
+" Authentication & Permissions "
+
+Authentication : provides answer to one question and that is who are you ?
+Permission : provides answer to one question whether u allowed or not .
+
+
+
+"Foriegn key stores references not text , DB stores author_id "
+
+// models.py
+
+class Author(models.Model):
+    authorname = models.CharField(max_length=30)
+
+class Book(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    vol = models.CharField(max_length=2)
+
+
+
+// serializer.py
+
+1. Default way – send ID (PrimaryKeyRelatedField)
+
+    payload =
+    {
+      "author": 1,
+      "bookname": "jumanji"
+    }
+
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+
+2. Show Id Only (read-only)
+
+class BookSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+3. Auto-assign from authenticated user
+
+    payload =
+    {
+      "bookname": "jumanji"
+    }
+
+    -- views.py 
+
+    serializer.save(author=request.user.author)
+
+
+4. SlugRelatedField (human-readable write)
+
+    payload  = 
+        {
+          "author": "vijay",
+          "bookname": "jumanji"
+        }
+
+
+    class BookSerializer(serializers.ModelSerializer):
+        author = serializers.SlugRelatedField(
+            slug_field="authorname",
+            queryset=Author.objects.all()
+        )
+
+        class Meta:
+            model = Book
+            fields = "__all__"
+
+
+5. Nester Serializer
+
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
+        fields = "__all__"
+
+class BookSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer()
+
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+6. Create Both
+
+class BookSerializer(serializers.ModelSerializer):
+    author = AuthorSerializer()
+
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+    def create(self, validated_data):
+        author_data = validated_data.pop("author")
+        author, _ = Author.objects.get_or_create(**author_data)
+        return Book.objects.create(author=author, **validated_data)
