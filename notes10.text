@@ -32,3 +32,7 @@ Drf does internally
     author = Author.objects.get(email="john@example.com")
      
     and this fails then i wont create the user it just failed with serialization error,like author not found or something ,  "author": ["Object with email=new@example.com does not exist."] 
+
+
+
+
