@@ -1,0 +1,49 @@
+// releted_names = "books"
+
+  related_name defines how you access a model from the other side of a relationship.
+  
+  class Book(models.Model):
+      author = models.ForeignKey(
+          Author,
+          on_delete=models.CASCADE,
+          related_name="books"
+      )
+  
+-- releted_name is for the models 
+-- and reverse relation is for the api,queries and performance
+
+// SELECT RELETED & PREFETCH RELETED
+
+-- select_releted 
+
+    onetoonefield
+    foreignkey
+
+    what problem does these two solve : the (n+1) query problem
+
+    select releted performs sql join to reteerive releted data in  a single query and is used for froeign key and one to one relationship. whereas prefetch runs seprate querys and joins result in python and is usef for many to many realltionship and reverse relationship both are used to preent n+1 query problem and boost the performance.
+
+
+
+// prefetch releted
+    -- used for manytomanyfield
+    -- used for reverse realtionship
+    -- onetoonefield also
+
+
+// releted_query_name 
+    -- it does not belong to models or drf
+    -- it is belong to django ORM --> model relationship -> reverse lookups
+
+    * CORE PROBLEM It solves :
+
+        class Book(models.Model):
+            author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+        now the relationship goes in both ways 
+        -- FORWARD & REVERSED(internally django made a reverse realtion)
+
+        
+
+
+// How to inspect queries (django-debug-toolbar)

@@ -1,0 +1,106 @@
+// SQL Join
+
+belongs to this topic : Relational Database Theory → Data Retrieval → Relational Algebra
+sql joins are about how relational database works
+
+// why join exists
+- the root cause is normalization means we dont store everything in one table 
+
+
+Example : One table
+ Table
+    order_id | user_name | user_email | product | price
+
+
+Example : Normalized Table
+ Table
+    users        orders        products
+    -----        ------        --------
+    id           id            id
+    name         user_id       name
+    email        product_id    price
+
+
+Now with the normalized table data is clean and splited
+
+Conclusion : join exits to stitch the releted table back togther when reading
+
+
+
+// Left Join 
+    -- “Give me ALL rows from the left table, even if no match exists on the right.” 
+
+    syntax :
+            SELECT * 
+            FROM users 
+            LEFT JOIN orders on users.id = orders.user_id 
+
+            note : users without orders became "null"
+
+// Right Join
+
+    -- right join is the same idea as the left join which returns all the matched rows with the left side and also return if no rows matches for no row matches the left side field value became null
+
+    syntax :
+            SELECT customers.name , orders.total
+            From customers
+            RIGHT JOIN orders on customers.id = orders.customer_id;
+
+
+
+// Inner Join
+    -- give me only rows that exist in both tables
+
+    syntax :
+            SELECT * 
+            FROM customers
+            INNER JOIN orders customer.id = orders.customer_id;
+
+            note: returns only when both rows matches 
+
+// Full Outer Join
+
+    -- returns every matched rows and even non matched rows from both side left side and right side and for non matching rows value became null .
+
+    and it is not directly supported in sql but do supported in postgressSQL.
+
+    * people often confuses full outer join with 
+
+        1.Left + right join without nulls = full outer join which is incorrect
+        2. full outer join is same as uniion incorrect.
+        3. full outer join is for forieng keys also incorrect 
+
+    * full outer join very rare in crud apps
+    it is used for data reconcilation and reporting analytics and auditing
+
+
+// Cross Join(cartesian Product)
+    -- combine every row of Table A to every row of Table B
+
+        Table A = 10 row , Table B = 5 row
+        Totoll rows = 50
+
+
+
+// Union Vs Join
+
+    -- Join is about relationship
+    -- union is not about realtionship
+
+    union means as one 
+    means same fields in both table with different data resources 
+
+    like table-A and table-B have same strucutre like this 
+
+    Table A = name | age | profession | from school 
+    Table B = name| age | profession | from community
+
+    now unions
+
+    united table as one  = name | age | profession |
+
+        SELECT * 
+        FROM school
+        UNION
+        SELECT * 
+        FROM community
