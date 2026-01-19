@@ -1,0 +1,86 @@
+@action is a way to add custom endpoints to a ViewSet that are NOT part of standard CRUD.
+
+
+CRUD gives you only:
+
+    list
+    retrieve
+    create
+    update
+    partial_update
+    destroy
+
+But real APIs always need extra operations:
+
+    approve
+    cancel
+    like
+    publish
+    stats
+    search
+    reset-password
+
+Why @action exists ? : without action we have to 
+
+    write a separate view
+    write separate URLs
+    break the ViewSet concept
+
+    @action keeps related logic together.
+
+
+Example 
+
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
+class BookViewSet(ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    @action(detail=True, methods=["post"])
+    def publish(self, request, pk=None):
+        book = self.get_object()
+        book.is_published = True
+        book.save()
+        return Response({"status": "published"})
+
+
+
+This creates a NEW endpoint:
+    POST /books/{id}/publish/
+
+
+The most important parameter in @action is :
+
+    @action(detail=True) --> object level orientation
+
+        -- url include pk , it works on the single object
+
+        -- Example :
+            @action(detail=False, methods=["get"])
+            def recent(self, request):
+                books = Book.objects.order_by("-created_at")[:5]
+                serializer = self.get_serializer(books, many=True)
+                return Response(serializer.data)
+
+
+    @action(detail=False) --> collection level orientation
+
+        -- url include no pk, works on entire collection
+
+
+
+
+// Parameters that action accpets
+
+    @action(
+    detail=True,
+    methods=["post"],
+    permission_classes=[IsAdminUser],
+    authentication_classes=[TokenAuthentication],
+    serializer_class=CustomSerializer,
+    url_path="approve-book",
+    url_name="approve-book"
+)
