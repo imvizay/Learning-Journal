@@ -58,7 +58,9 @@ class ProductDetails(APIView):
 from rest_framework import generics
 from rest_framework import mixins
 """
-generics.GenericAPIView provides iinfrastrucutre but not actions ,so for actions such as get update put patch delete we uses mixins module to inherit the action based classes such are
+generics.GenericAPIView provides iinfrastrucutre but not actions ,so for actions such as 
+(get update put patch delete ) 
+we uses mixins module to inherit the action based classes such are
 
 ListModeMixin = for all result associated of a class 
 CreateModeMixin

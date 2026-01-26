@@ -1,0 +1,18 @@
+// for a column or field if we are reciveing a list/array from the frontend
+
+
+-- models.py
+class ProductTag(models.Model):
+    tag = models.CharField(max_length=10)
+
+class Product(models.Model):
+    product = models.CharField(max_length=20)
+    tags = models.ManyToManyField(ProductTag,releted_name="tags")
+
+
+
+-- serializer.py
+
+class ProductSerializer(serializer.ModelSerializer):
+
+    
