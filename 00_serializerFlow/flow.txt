@@ -1,0 +1,26 @@
+incoming request data (JSON)
+        ↓
+to_internal_value()
+        ↓
+field validation
+        ↓
+validate_<field>()
+        ↓
+validate()
+        ↓
+serializer.is_valid()
+        ↓
+serializer.validated_data
+        ↓
+create() / update()
+        ↓
+model instance
+        ↓
+to_representation()
+        ↓
+response JSON
+
+
+
+
+// to_internal_value() ,this is where the json object  python data

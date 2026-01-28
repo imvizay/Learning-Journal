@@ -1,0 +1,7 @@
+authentication simple asks one question who are you thats it 
+whereas authorization gives us power and make us eligible for permissions that is granted to us.
+
+by default django authentication is session based and built on 04 pillars
+
+-- Request → Middleware → Authentication → request.user → View
+
