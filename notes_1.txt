@@ -38,16 +38,7 @@
    **** serializer = Serializer(instance=obj,data=request.data) *****
 
 
-<<<<<<< Updated upstream
 // is_valid is gatekeeper between the request and the database 
-=======
-    this decided whether to call the create method or update method of the serializer as interanlly it checks for the paramter value of the instance when we call serializer in the view 
-
-   **** serializer = Serializer(instance=obj,data=request.data) *****
-
-
-// is_valid() is gatekeeper between the request and the database 
->>>>>>> Stashed changes
     
     serializer.is_valid() validates incoming request data against serializer rules, runs field-level and object-level validations, converts data into Python-safe types, and ensures only clean data proceeds to saving.
 

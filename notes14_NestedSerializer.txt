@@ -1,0 +1,17 @@
+// NESTED SERIALIZERS
+
+class ProductSerializer(serializer.ModelSerializer):
+    author = serializer.PrimaryKeyReletedField(queryset=Author.objects.all())
+
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+
+-- author = serializer.PrimaryKeyReletedField(queryset=Author.objects.all())
+
+    this declaration is done here to make the serializer class validates the input sent by postman or frontend for the author field as the frontend probably will sent a user id(integer)
+    to check that a valid user exists with that id in the data or not thats why we passed a query set as parameter to that PrimaryKeyReletedField
+
+    "queryset" is exactlly telling the drf to lookup the field in that model for the provided value 
+    to ensure that a user exists or not without it the drf will throw an error 
